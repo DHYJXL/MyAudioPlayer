@@ -2,7 +2,7 @@
 using System.Collections;
 using DG.Tweening;
 
-
+[RequireComponent(typeof(AudioSource))]
 public class AudioPlayer : MonoBehaviour
 {
     private AudioSource audioSource;
