@@ -7,6 +7,10 @@ public class QueuePlayerGroup
 {
     private List<QueuePlayer> queuePlayers;
     private List<int> weights;
+
+    private List<QueuePlayer> hideQueuePlayers;
+    private List<int> hideWeights;
+
     public AudioPlayer audioPlayer
     {
         get;
@@ -18,7 +22,9 @@ public class QueuePlayerGroup
     public QueuePlayerGroup(AudioPlayer audioPlayer)
     {
         queuePlayers = new List<QueuePlayer>();
+        hideQueuePlayers = new List<QueuePlayer>();
         weights = new List<int>();
+        hideWeights = new List<int>();
         this.audioPlayer = audioPlayer;
     }
     /// <summary>
@@ -56,8 +62,10 @@ public class QueuePlayerGroup
     {
         if (weights.Contains(queuePlayer.weight))
         {
+            hideWeights.Add(queuePlayer.weight);
             weights.Remove(queuePlayer.weight);
-            queuePlayers.Remove(queuePlayer);
+            hideQueuePlayers.Add(queuePlayer);
+            queuePlayers.Remove(queuePlayer);     
         }
         else
         {
@@ -70,7 +78,7 @@ public class QueuePlayerGroup
     /// </summary>
     /// <param name="weight"></param>
     /// <returns></returns>
-    public QueuePlayer FindQueuePlayer(int weight)
+    private QueuePlayer FindQueuePlayer(int weight)
     {
         if (!weights.Contains(weight))
         {
@@ -84,7 +92,28 @@ public class QueuePlayerGroup
                 return queuePlayer;
             }
         }
-        Debug.Log("查找失败，见鬼了");
+        return null;
+    }
+
+    /// <summary>
+    /// 根据级别查找隐藏队列
+    /// </summary>
+    /// <param name="weight"></param>
+    /// <returns></returns>
+    private QueuePlayer FindHideQueuePlayer(int weight)
+    {
+        if (!hideWeights.Contains(weight))
+        {
+            Debug.Log("查找失败，不存在该级别队列：" + weight);
+            return null;
+        }
+        foreach (QueuePlayer queuePlayer in hideQueuePlayers)
+        {
+            if (queuePlayer.weight == weight)
+            {
+                return queuePlayer;
+            }
+        }
         return null;
     }
 
@@ -100,6 +129,17 @@ public class QueuePlayerGroup
         {
             QueuePlayer queuePlayer = FindQueuePlayer(weight);
             queuePlayer.AddClip(audioClip);
+        }
+        else if (hideWeights.Contains(weight))
+        {
+            Debug.Log("移除列表中存在该级别");
+            QueuePlayer queuePlayer = FindHideQueuePlayer(weight);
+            
+            queuePlayer.AddClip(audioClip);
+            AddQueue(queuePlayer);
+
+            hideQueuePlayers.Remove(queuePlayer);
+            hideWeights.Remove(weight);
         }
         else
         {
