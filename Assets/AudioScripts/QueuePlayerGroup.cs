@@ -168,7 +168,6 @@ public class QueuePlayerGroup
         isPlaying = true;
         Debug.Log("开始播放");
         queuePlayers[0].TryPlayQueue(() => RemoveQueue(queuePlayers[0]));
-
     }
 
     /// <summary>

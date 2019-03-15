@@ -77,6 +77,10 @@ public class AudioPlayer : MonoBehaviour
         {
             this.callBack = callBack;
         }
+        if(queuePlayerGroup.isPlaying)
+        {
+            queuePlayerGroup.Interrupt();
+        }
         remainingTime = audioClip.length;
         audioSource.clip = audioClip;
         audioSource.Play();
