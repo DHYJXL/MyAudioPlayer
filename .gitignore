@@ -1,0 +1,45 @@
+# =============== #
+# Unity generated #
+# =============== #
+Temp/
+Library/*
+!Library/*.asset
+InspectorExpandedItems.asset
+Assets/BabyFrameWork
+Assets/BabyFrameWork.meta
+com.sinyee.babybus.talk2kiki
+com.sinyee.babybus.talk2kiki-Development
+ZTest
+ZTest.meta
+bb-uno
+bb-uno.meta
+UnoLibs
+UnoLibs.meta
+# ===================================== #
+# Visual Studio / MonoDevelop generated #
+# ===================================== #
+ExportedObj/
+obj/
+*.svd
+*.userprefs
+/*.csproj
+*.pidb
+*.suo
+/*.sln
+*.user
+*.unityproj
+*.booproj
+.vs
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+/Assets/Editor/WakaTime
+/Assets/UnoLibs/
+/Assets/UnoLibs.meta

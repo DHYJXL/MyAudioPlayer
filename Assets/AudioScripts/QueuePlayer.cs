@@ -1,0 +1,86 @@
+﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using System;
+
+
+public class QueuePlayer
+{
+    private AudioPlayer ap;
+    private List<AudioClip> audioQueue;
+    private QueuePlayerGroup holderGroup;
+
+    public int weight
+    {
+        get;
+        private set;
+    }
+
+    public QueuePlayer(AudioPlayer audioPlayer, int weight)
+    {
+        this.ap = audioPlayer;
+        audioQueue = new List<AudioClip>();
+        this.weight = weight;
+    }
+
+
+    public bool isPlaying
+    {
+        get;
+        private set;
+    }
+
+
+    public void AddClip(AudioClip audioClip, int insertIndex = -1)
+    {
+        if (insertIndex >= 0)
+        {
+            audioQueue.Insert(insertIndex, audioClip);
+        }
+        else
+        {
+            audioQueue.Add(audioClip);
+        }
+    }
+    public void Interrupt()
+    {
+        if (isPlaying)
+        {
+            ap.Stop();
+            audioQueue.RemoveAt(0);
+            isPlaying = false;
+        }
+    }
+    public void TryPlayQueue(Action callback = null)
+    {
+        if (audioQueue == null || audioQueue.Count == 0)
+        {
+            if (callback != null)
+            {
+                holderGroup.ClearPlayingQueue();
+                callback();
+            }
+            return;
+        }
+        if (ap.isPlaying == false && isPlaying == false)
+        {
+            ap.Play(audioQueue[0]);
+            holderGroup.SetPlayingQueue(this);
+            isPlaying = true;
+        }
+        if (isPlaying && ap.remainingTime <= 0)
+        {
+            isPlaying = false;
+            audioQueue.RemoveAt(0);
+        }
+    }
+
+
+    public void SetHolderGroup(QueuePlayerGroup holderGroup)
+    {
+        this.holderGroup = holderGroup;
+        this.ap = holderGroup.audioPlayer;
+    }
+}
+
+
