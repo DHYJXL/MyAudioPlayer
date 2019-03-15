@@ -122,20 +122,20 @@ public class QueuePlayerGroup
     /// </summary>
     /// <param name="audioClip">音频</param>
     /// <param name="weight">设置的级别</param>
-    public void AddAudioClip(AudioClip audioClip, int weight)
+    public void AddAudioClipInfo(AudioClipInfo audioClipInfo, int weight)
     {
         Debug.Log("添加");
         if (weights.Contains(weight))
         {
             QueuePlayer queuePlayer = FindQueuePlayer(weight);
-            queuePlayer.AddClip(audioClip);
+            queuePlayer.AddClip(audioClipInfo);
         }
         else if (hideWeights.Contains(weight))
         {
             Debug.Log("移除列表中存在该级别");
             QueuePlayer queuePlayer = FindHideQueuePlayer(weight);
             
-            queuePlayer.AddClip(audioClip);
+            queuePlayer.AddClip(audioClipInfo);
             AddQueue(queuePlayer);
 
             hideQueuePlayers.Remove(queuePlayer);
@@ -144,7 +144,7 @@ public class QueuePlayerGroup
         else
         {
             QueuePlayer queuePlayer = new QueuePlayer(audioPlayer, weight);//可优化
-            queuePlayer.AddClip(audioClip);
+            queuePlayer.AddClip(audioClipInfo);
             AddQueue(queuePlayer);
         }
     }

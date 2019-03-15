@@ -13,21 +13,25 @@ public class AudioMain : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
             Debug.Log("start");
-            ap.QueuePlay(audioClips[0], 3);
-            ap.QueuePlay(audioClips[1], 5);
-            ap.QueuePlay(audioClips[2], 2);
-            ap.QueuePlay(audioClips[3], 0);
+            ap.QueuePlay(audioClips[0], 3, true, CallBack);
+            ap.QueuePlay(audioClips[1], 5, true, CallBack);
+            ap.QueuePlay(audioClips[2], 2, true, CallBack);
+            ap.QueuePlay(audioClips[3], 0, true, CallBack);
         }
 
         if (Input.GetKeyDown(KeyCode.S))
         {
-            ap.Play(audioClips[4]);
+            ap.Play(audioClips[4], true, CallBack);
         }
 
         if (Input.GetKeyDown(KeyCode.D))
         {
-            ap.QueuePlay(audioClips[5], 3);
-            ap.QueuePlay(audioClips[6], 0);
+            ap.QueuePlay(audioClips[5], 3, true, CallBack);
+            ap.QueuePlay(audioClips[6], 0, true, CallBack);
         }
 	}
+    public void CallBack()
+    {
+        Debug.Log("播放完成" + ap.currentAudioClip.name);
+    }
 }

@@ -7,7 +7,7 @@ using System;
 public class QueuePlayer
 {
     private AudioPlayer ap;
-    private List<AudioClip> audioQueue;
+    private List<AudioClipInfo> audioQueue;
     private QueuePlayerGroup holderGroup;
 
     public int weight
@@ -19,7 +19,7 @@ public class QueuePlayer
     public QueuePlayer(AudioPlayer audioPlayer, int weight)
     {
         this.ap = audioPlayer;
-        audioQueue = new List<AudioClip>();
+        audioQueue = new List<AudioClipInfo>();
         this.weight = weight;
     }
 
@@ -31,7 +31,7 @@ public class QueuePlayer
     }
 
 
-    public void AddClip(AudioClip audioClip, int insertIndex = -1)
+    public void AddClip(AudioClipInfo audioClip, int insertIndex = -1)
     {
         if (insertIndex >= 0)
         {
@@ -64,7 +64,7 @@ public class QueuePlayer
         }
         if (ap.isPlaying == false && isPlaying == false)
         {
-            ap.Play(audioQueue[0]);
+            ap.Play(audioQueue[0].audioClip, true, audioQueue[0].callBack);
             holderGroup.SetPlayingQueue(this);
             isPlaying = true;
         }
