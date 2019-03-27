@@ -175,14 +175,6 @@ public class QueuePlayerGroup
     /// </summary>
     public void Interrupt()
     {
-        //for (int i = 0; i < weights.Count; i++)
-        //{
-        //    if (queuePlayers[i].isPlaying == false)
-        //    {
-        //        continue;
-        //    }
-        //    queuePlayers[i].Interrupt();
-        //}
         if (playingQueue != null)
         {
             playingQueue.Interrupt();

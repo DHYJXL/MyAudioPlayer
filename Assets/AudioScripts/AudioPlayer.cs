@@ -56,6 +56,7 @@ public class AudioPlayer : MonoBehaviour
             if (callBack != null)
             {
                 callBack();
+                callBack = null;
             }
         }
 
