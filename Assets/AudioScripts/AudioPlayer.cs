@@ -6,17 +6,28 @@ using System;
 [RequireComponent(typeof(AudioSource))]
 public class AudioPlayer : MonoBehaviour
 {
-    public AudioSource audioSource;
-    private QueuePlayerGroup queuePlayerGroup1;
-    private QueuePlayerGroup QueuePlayerGroup1
+    private AudioSource auSource;
+    private AudioSource AuSource
     {
         get
         {
-            if (queuePlayerGroup1 == null)
+            if (auSource == null)
             {
-                queuePlayerGroup1 = new QueuePlayerGroup(this);
+                auSource = GetComponent<AudioSource>();
             }
-            return queuePlayerGroup1;
+            return auSource;
+        }
+    }
+    private QueuePlayerGroup queuePg;
+    private QueuePlayerGroup QueuePg
+    {
+        get
+        {
+            if (queuePg == null)
+            {
+                queuePg = new QueuePlayerGroup(this);
+            }
+            return queuePg;
         }
     }
 
@@ -29,7 +40,7 @@ public class AudioPlayer : MonoBehaviour
     {
         get
         {
-            return audioSource.isPlaying;
+            return AuSource.isPlaying;
         }
     }
 
@@ -37,7 +48,7 @@ public class AudioPlayer : MonoBehaviour
     {
         get
         {
-            return audioSource.clip;
+            return AuSource.clip;
         }
     }
     /// <summary>
@@ -65,7 +76,7 @@ public class AudioPlayer : MonoBehaviour
             }
         }
 
-        QueuePlayerGroup1.TryPlay();
+        QueuePg.TryPlay();
     }
 
     /// <summary>
@@ -75,7 +86,7 @@ public class AudioPlayer : MonoBehaviour
     /// <param name="interrupt">是否打断正在播的音频，如果正在播且为false则不作操作</param>
     public void Play(AudioClip audioClip, bool interrupt = true, Action callBack = null)
     {
-        if (audioSource.isPlaying && interrupt == false)
+        if (AuSource.isPlaying && interrupt == false)
         {
             return;
         }
@@ -83,13 +94,13 @@ public class AudioPlayer : MonoBehaviour
         {
             this.callBack = callBack;
         }
-        if(QueuePlayerGroup1.isPlaying)
+        if(QueuePg.isPlaying)
         {
-            QueuePlayerGroup1.Interrupt();
+            QueuePg.Interrupt();
         }
         remainingTime = audioClip.length;
-        audioSource.clip = audioClip;
-        audioSource.Play();
+        AuSource.clip = audioClip;
+        AuSource.Play();
     }
 
     /// <summary>
@@ -112,20 +123,20 @@ public class AudioPlayer : MonoBehaviour
     /// <param name="callBack"></param>
     public void QueuePlay(AudioClip audioClip, int weight, bool interrupt = true, Action callBack = null)
     {
-        if (audioSource.isPlaying && interrupt == false)
+        if (AuSource.isPlaying && interrupt == false)
         {
             Debug.Log("播放中");
             return;
         }
         AudioClipInfo audioClipInfo = new AudioClipInfo(audioClip, callBack);
-        QueuePlayerGroup1.AddAudioClipInfo(audioClipInfo, weight);
+        QueuePg.AddAudioClipInfo(audioClipInfo, weight);
     }
 
 
     public void Stop()
     {
         remainingTime = 0;
-        audioSource.Stop();
+        AuSource.Stop();
     }
 }
 
