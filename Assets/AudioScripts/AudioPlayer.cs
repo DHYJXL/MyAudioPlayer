@@ -6,8 +6,19 @@ using System;
 [RequireComponent(typeof(AudioSource))]
 public class AudioPlayer : MonoBehaviour
 {
-    private AudioSource audioSource;
-    private QueuePlayerGroup queuePlayerGroup;
+    public AudioSource audioSource;
+    private QueuePlayerGroup queuePlayerGroup1;
+    private QueuePlayerGroup QueuePlayerGroup1
+    {
+        get
+        {
+            if (queuePlayerGroup1 == null)
+            {
+                queuePlayerGroup1 = new QueuePlayerGroup(this);
+            }
+            return queuePlayerGroup1;
+        }
+    }
 
     private Action callBack;
 
@@ -38,12 +49,6 @@ public class AudioPlayer : MonoBehaviour
         private set;
     }
 
-    private void Awake()
-    {
-        audioSource = GetComponent<AudioSource>();
-        queuePlayerGroup = new QueuePlayerGroup(this);
-    }
-
     private void Update()
     {
         if (remainingTime > 0)
@@ -60,7 +65,7 @@ public class AudioPlayer : MonoBehaviour
             }
         }
 
-        queuePlayerGroup.TryPlay();
+        QueuePlayerGroup1.TryPlay();
     }
 
     /// <summary>
@@ -78,9 +83,9 @@ public class AudioPlayer : MonoBehaviour
         {
             this.callBack = callBack;
         }
-        if(queuePlayerGroup.isPlaying)
+        if(QueuePlayerGroup1.isPlaying)
         {
-            queuePlayerGroup.Interrupt();
+            QueuePlayerGroup1.Interrupt();
         }
         remainingTime = audioClip.length;
         audioSource.clip = audioClip;
@@ -113,7 +118,7 @@ public class AudioPlayer : MonoBehaviour
             return;
         }
         AudioClipInfo audioClipInfo = new AudioClipInfo(audioClip, callBack);
-        queuePlayerGroup.AddAudioClipInfo(audioClipInfo, weight);
+        QueuePlayerGroup1.AddAudioClipInfo(audioClipInfo, weight);
     }
 
 

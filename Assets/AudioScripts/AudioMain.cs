@@ -13,9 +13,9 @@ public class AudioMain : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
             Debug.Log("start");
-            ap.QueuePlay(audioClips[0], 3, true, CallBack);
-            ap.QueuePlay(audioClips[1], 5, true, CallBack);
-            ap.QueuePlay(audioClips[2], 2, true, CallBack);
+            ap.QueuePlay(audioClips[0], 0, true, CallBack);
+            ap.QueuePlay(audioClips[1], 0, true, CallBack);
+            ap.QueuePlay(audioClips[2], 0, true, CallBack);
             ap.QueuePlay(audioClips[3], 0, true, CallBack);
         }
 
@@ -26,7 +26,7 @@ public class AudioMain : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.D))
         {
-            ap.QueuePlay(audioClips[5], 3, true, CallBack);
+            ap.QueuePlay(audioClips[5], 0, true, CallBack);
             ap.QueuePlay(audioClips[6], 0, true, CallBack);
         }
 	}
