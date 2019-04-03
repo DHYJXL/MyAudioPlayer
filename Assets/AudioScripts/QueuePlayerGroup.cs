@@ -175,10 +175,10 @@ public class QueuePlayerGroup
     /// </summary>
     public void Interrupt()
     {
-        if (playingQueue != null)
+        if (playingQueue != null && isPlaying)
         {
-            playingQueue.Interrupt();
             isPlaying = false;
+            playingQueue.Interrupt();
         }
     }
 

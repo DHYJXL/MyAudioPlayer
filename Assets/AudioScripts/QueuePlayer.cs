@@ -47,9 +47,10 @@ public class QueuePlayer
         if (isPlaying)
         {
             Debug.Log(audioQueue[0].audioClip.name + "被打断了");
+            isPlaying = false;
             ap.Stop();
             audioQueue.RemoveAt(0);
-            isPlaying = false;
+           
         }
     }
     public void TryPlayQueue(Action callback = null)

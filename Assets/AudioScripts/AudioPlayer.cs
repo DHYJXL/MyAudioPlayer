@@ -137,6 +137,10 @@ public class AudioPlayer : MonoBehaviour
     {
         remainingTime = 0;
         AuSource.Stop();
+        if (QueuePg.isPlaying)
+        {
+            QueuePg.Interrupt();
+        }
     }
 }
 
